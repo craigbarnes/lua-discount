@@ -13,7 +13,7 @@ static const char *const discount_options[] = {
     "nosuperscript",
     "norelaxed",
     "notables",
-    "nostrikethrought",
+    "nostrikethrough",
     "toc",
     "compat",
     "autolink",

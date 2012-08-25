@@ -29,7 +29,7 @@ cdata           | Generate code for XML (using `![CDATA[...]]`)
 nosuperscript   | Disable superscript (`A^B`)
 norelaxed       | Emphasis happens _everywhere_
 notables        | Don't process [PHP Markdown Extra] tables.
-nostrikethrought| Forbid `~~strikethrough~~`
+nostrikethrough | Forbid `~~strikethrough~~`
 toc             | Do table of contents processing
 compat          | Compatability with MarkdownTest_1.0
 autolink        | Make `http://example.com` a link even without `<>`s
