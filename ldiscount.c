@@ -1,3 +1,5 @@
+#include <stddef.h>
+#include <lua.h>
 #include <lauxlib.h>
 #include <mkdio.h>
 
