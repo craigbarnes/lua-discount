@@ -1,7 +1,12 @@
 lua-discount
 ============
+Lua bindings for [Discount] -- a fast C implementation of [Markdown].
 
-Lua binding to [Discount] -- a fast C implementation of the [Markdown] language
+Installation
+------------
+
+    make
+    sudo make install
 
 Usage
 -----
@@ -23,7 +28,7 @@ noimage         | Don't do image processing and disallow `<img>` tags
 nopants         | Don't use [SmartyPants] (`smartypants()`)
 nohtml          | Don't allow raw HTML at all
 strict          | Disable `SUPERSCRIPT`, `RELAXED_EMPHASIS`
-tagtext         | Process text inside an html tag; no `<em>`, no `<bold>`, no html or `[]` expansion
+tagtext         | Process text inside html tags
 noext           | Don't allow [pseudo-protocols]
 cdata           | Generate code for XML (using `![CDATA[...]]`)
 nosuperscript   | Disable superscript (`A^B`)
@@ -32,7 +37,7 @@ notables        | Don't process [PHP Markdown Extra] tables.
 nostrikethrough | Forbid `~~strikethrough~~`
 toc             | Do table of contents processing
 compat          | Compatability with MarkdownTest_1.0
-autolink        | Make `http://example.com` a link even without `<>`s
+autolink        | Turn URLs into links, even without enclosing angle brackets
 safelink        | Paranoid check for link protocol
 noheader        | Don't process document headers
 tabstop         | Expand tabs to 4 spaces
