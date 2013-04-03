@@ -71,15 +71,19 @@ static int ldiscount(lua_State *L) {
 
     doc = mkd_string(str, len, flags);
     if (mkd_compile(doc, flags)) {
-        char *result;
-        int result_size = 0;
+        char *result, *toc;
+        int result_size = 0, toc_size = 0;
         if ((result_size = mkd_document(doc, &result)) != EOF) {
             if (flags & MKD_CDATA) {
                 result_size = mkd_xml(result, result_size, &result);
             }
             lua_pushlstring(L, result, result_size);
+
+            toc_size = mkd_toc(doc, &toc);
+            lua_pushlstring(L, toc, toc_size);
+
             mkd_cleanup(doc);
-            return 1;
+            return 2;
         }
         return 0;
     } else {

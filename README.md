@@ -11,12 +11,26 @@ Installation
 Usage
 -----
 
-The `discount` module provides a single function, which takes a string of
-Markdown formatted text and various, optional configuration flags.
+The `discount` module provides a single function:
+
+    doc, toc = discount(markdown, [opts...])
+
+**Parameters:**
+
+* `markdown`: a *string* of Markdown formatted text
+* `opts`: zero or more configuration *strings* (see below)
+
+**Returns:**
+
+* `doc`: the rendered Markdown document as a *string* of HTML
+* `toc`: the table of contents as a *string* of HTML
+
+Example
+-------
 
     local discount = require "discount"
-    local html = discount("This is **Markdown**", "noimages", "toc")
-    print(html)
+    local doc, toc = discount("This is **Markdown**", "noimages", "toc")
+    print(doc, toc)
 
 Options
 -------
