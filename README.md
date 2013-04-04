@@ -1,4 +1,4 @@
-lua-discount
+ldiscount
 ============
 Lua bindings for [Discount] -- a fast C implementation of [Markdown].
 
@@ -11,9 +11,9 @@ Installation
 Usage
 -----
 
-The `discount` module provides a single function:
+The `ldiscount` module provides a single function:
 
-    doc, toc = discount(markdown, [opts...])
+    doc, toc = ldiscount(markdown, [opts...])
 
 **Parameters:**
 
@@ -28,8 +28,8 @@ The `discount` module provides a single function:
 Example
 -------
 
-    local discount = require "discount"
-    local doc, toc = discount("This is **Markdown**", "noimages", "toc")
+    local ldiscount = require "ldiscount"
+    local doc, toc = ldiscount("This is **Markdown**", "noimages", "toc")
     print(doc, toc)
 
 Options

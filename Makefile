@@ -1,23 +1,39 @@
+VERSION = 0.2
+
 PREFIX  = /usr/local
 LIBDIR  = $(PREFIX)/lib/lua/5.1
 CFLAGS  = -O2 -Wall -fPIC
 LDFLAGS = -shared
 LDLIBS  = -lmarkdown
 
-discount.so: ldiscount.o
-	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $@ $<
+SRCROCK = ldiscount-$(VERSION)-1.src.rock
+ROCKSPEC= ldiscount-$(VERSION)-1.rockspec
 
-install: discount.so
-	install -Dpm0755 discount.so $(DESTDIR)$(LIBDIR)/discount.so
+ldiscount.so: ldiscount.o
+	$(CC) $(LDFLAGS) $(LDLIBS) -o $@ $<
+
+install: ldiscount.so
+	install -Dpm0755 ldiscount.so $(DESTDIR)$(LIBDIR)/ldiscount.so
 
 uninstall:
-	rm -f $(DESTDIR)$(LIBDIR)/discount.so
+	rm -f $(DESTDIR)$(LIBDIR)/ldiscount.so
 
-check: discount.so
-	@lua -e 'local md = require "discount" print(md "*It works!*")'
+rock: $(SRCROCK)
+rockspec: $(ROCKSPEC)
+
+$(SRCROCK): $(ROCKSPEC)
+	luarocks pack $(ROCKSPEC)
+
+$(ROCKSPEC): rockspec.in
+	@sed 's/@VERSION@/$(VERSION)/g; s/@RELEASE@/1/g' rockspec.in > $@
+	@echo 'Generated: $@'
+
+check: ldiscount.so test.lua $(ROCKSPEC)
+	@lua test.lua && echo 'Tests passed'
+	@luarocks lint $(ROCKSPEC) && echo 'Rockspec file valid'
 
 clean:
-	rm -f discount.so ldiscount.o
+	rm -f ldiscount.so ldiscount.o $(SRCROCK) $(ROCKSPEC)
 
 
-.PHONY: install uninstall check clean
+.PHONY: install uninstall rock rockspec check clean

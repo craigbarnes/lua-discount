@@ -3,7 +3,7 @@
 #include <lauxlib.h>
 #include <mkdio.h>
 
-static const char *const discount_options[] = {
+static const char *const ldiscount_options[] = {
     "nolinks",
     "noimages",
     "nopants",
@@ -30,7 +30,7 @@ static const char *const discount_options[] = {
     NULL
 };
 
-static const int discount_option_codes[] = {
+static const int ldiscount_option_codes[] = {
     MKD_NOLINKS,
     MKD_NOIMAGE,
     MKD_NOPANTS,
@@ -65,8 +65,8 @@ static int ldiscount(lua_State *L) {
     int i;
 
     for (i = 2; i <= num_args; i++) {
-        int option_index = luaL_checkoption(L, i, NULL, discount_options);
-        flags |= discount_option_codes[option_index];
+        int option_index = luaL_checkoption(L, i, NULL, ldiscount_options);
+        flags |= ldiscount_option_codes[option_index];
     }
 
     doc = mkd_string(str, len, flags);
@@ -108,8 +108,8 @@ static const struct luaL_reg ldiscount_funcs[] = {
     {NULL, NULL}
 };
 
-int luaopen_discount(lua_State *L) {
-    luaL_register(L, "discount", ldiscount_funcs);
+int luaopen_ldiscount(lua_State *L) {
+    luaL_register(L, "ldiscount", ldiscount_funcs);
     lua_newtable(L);
     luaL_register(L, NULL, ldiscount_meta);
     lua_setmetatable(L, -2);
