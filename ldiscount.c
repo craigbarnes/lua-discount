@@ -4,56 +4,19 @@
 #include <mkdio.h>
 
 static const char *const ldiscount_options[] = {
-    "nolinks",
-    "noimages",
-    "nopants",
-    "nohtml",
-    "strict",
-    "tagtext",
-    "noext",
-    "cdata",
-    "nosuperscript",
-    "norelaxed",
-    "notables",
-    "nostrikethrough",
-    "toc",
-    "compat",
-    "autolink",
-    "safelink",
-    "noheader",
-    "tabstop",
-    "nodivquote",
-    "noalphalist",
-    "nodlist",
-    "extrafootnote",
-    "embed",
-    NULL
+    "nolinks", "noimages", "nopants", "nohtml", "strict",
+    "tagtext", "noext", "cdata", "nosuperscript", "norelaxed",
+    "notables", "nostrikethrough", "toc", "compat", "autolink",
+    "safelink", "noheader", "tabstop", "nodivquote",
+    "noalphalist", "nodlist", "extrafootnote", "embed", NULL
 };
 
 static const int ldiscount_option_codes[] = {
-    MKD_NOLINKS,
-    MKD_NOIMAGE,
-    MKD_NOPANTS,
-    MKD_NOHTML,
-    MKD_STRICT,
-    MKD_TAGTEXT,
-    MKD_NO_EXT,
-    MKD_CDATA,
-    MKD_NOSUPERSCRIPT,
-    MKD_NORELAXED,
-    MKD_NOTABLES,
-    MKD_NOSTRIKETHROUGH,
-    MKD_TOC,
-    MKD_1_COMPAT,
-    MKD_AUTOLINK,
-    MKD_SAFELINK,
-    MKD_NOHEADER,
-    MKD_TABSTOP,
-    MKD_NODIVQUOTE,
-    MKD_NOALPHALIST,
-    MKD_NODLIST,
-    MKD_EXTRA_FOOTNOTE,
-    MKD_EMBED
+    MKD_NOLINKS, MKD_NOIMAGE, MKD_NOPANTS, MKD_NOHTML, MKD_STRICT,
+    MKD_TAGTEXT, MKD_NO_EXT, MKD_CDATA, MKD_NOSUPERSCRIPT, MKD_NORELAXED,
+    MKD_NOTABLES, MKD_NOSTRIKETHROUGH, MKD_TOC, MKD_1_COMPAT, MKD_AUTOLINK,
+    MKD_SAFELINK, MKD_NOHEADER, MKD_TABSTOP, MKD_NODIVQUOTE,
+    MKD_NOALPHALIST, MKD_NODLIST, MKD_EXTRA_FOOTNOTE, MKD_EMBED
 };
 
 static int ldiscount(lua_State *L) {
