@@ -62,7 +62,7 @@ extrafootnote   | Enable [PHP Markdown Extra] style [footnotes]
 
 
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
-[Markdown]: http://daringfireball.net/projects/markdown)
+[Markdown]: http://daringfireball.net/projects/markdown
 [SmartyPants]: http://daringfireball.net/projects/smartypants/
 [PHP Markdown Extra]: http://michelf.com/projects/php-markdown/extra/
 [pseudo-protocols]: http://www.pell.portland.or.us/~orc/Code/discount/#pseudo
