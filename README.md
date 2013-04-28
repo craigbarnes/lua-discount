@@ -1,24 +1,24 @@
 ldiscount
-============
-Lua bindings for [Discount] -- a fast C implementation of [Markdown].
+=========
+
+Lua bindings for the [Discount] [Markdown] library.
 
 Installation
 ------------
 
-    make
-    sudo make install
+    make && sudo make install
 
 Usage
 -----
 
 The `ldiscount` module provides a single function:
 
-    doc, toc = ldiscount(markdown, [opts...])
+    local doc, toc = ldiscount(markdown, ...)
 
 **Parameters:**
 
-* `markdown`: a *string* of Markdown formatted text
-* `opts`: zero or more configuration *strings* (see below)
+* `markdown`: a *string* of Markdown-formatted text
+* `...`: zero or more option *strings* (see below)
 
 **Returns:**
 
