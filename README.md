@@ -15,12 +15,12 @@ The `ldiscount` module provides a single function:
 
     local doc, toc = ldiscount(markdown, ...)
 
-**Parameters:**
+#### Parameters
 
 * `markdown`: a *string* of Markdown-formatted text
 * `...`: zero or more option *strings* (see below)
 
-**Returns:**
+#### Returns
 
 * `doc`: the rendered Markdown document as a *string* of HTML
 * `toc`: the table of contents as a *string* of HTML
