@@ -71,8 +71,8 @@ static const struct luaL_reg ldiscount_funcs[] = {
     {NULL, NULL}
 };
 
-int luaopen_ldiscount(lua_State *L) {
-    luaL_register(L, "ldiscount", ldiscount_funcs);
+int luaopen_discount(lua_State *L) {
+    luaL_register(L, "discount", ldiscount_funcs);
     lua_newtable(L);
     luaL_register(L, NULL, ldiscount_meta);
     lua_setmetatable(L, -2);

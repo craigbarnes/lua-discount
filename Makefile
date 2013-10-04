@@ -5,20 +5,20 @@ CFLAGS  = -O2 -Wall -fPIC
 LDFLAGS = -shared
 LDLIBS  = -lmarkdown
 
-ldiscount.so: ldiscount.o
+discount.so: ldiscount.o
 	$(CC) $(LDFLAGS) $(LDLIBS) -o $@ $<
 
-install: ldiscount.so
-	install -Dpm0755 ldiscount.so $(DESTDIR)$(LIBDIR)/ldiscount.so
+install: discount.so
+	install -Dpm0755 discount.so $(DESTDIR)$(LIBDIR)/discount.so
 
 uninstall:
-	rm -f $(DESTDIR)$(LIBDIR)/ldiscount.so
+	rm -f $(DESTDIR)$(LIBDIR)/discount.so
 
-check: ldiscount.so test.lua
+check: discount.so test.lua
 	@lua test.lua && echo 'Tests passed'
 
 clean:
-	rm -f ldiscount.so ldiscount.o
+	rm -f discount.so ldiscount.o
 
 
 .PHONY: install uninstall check clean
