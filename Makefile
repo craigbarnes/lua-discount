@@ -5,7 +5,7 @@ CFLAGS  = -O2 -Wall -fPIC
 LDFLAGS = -shared
 LDLIBS  = -lmarkdown
 
-discount.so: ldiscount.o
+discount.so: discount.o
 	$(CC) $(LDFLAGS) $(LDLIBS) -o $@ $<
 
 install: discount.so
@@ -18,7 +18,7 @@ check: discount.so test.lua
 	@lua test.lua && echo 'Tests passed'
 
 clean:
-	rm -f discount.so ldiscount.o
+	rm -f discount.so discount.o
 
 
 .PHONY: install uninstall check clean
