@@ -1,3 +1,7 @@
+/// Lua bindings for the Discount Markdown library.
+// @copyright 2012-2013 Craig Barnes
+// @license ISC
+
 #include <stddef.h>
 #include <lua.h>
 #include <lauxlib.h>
