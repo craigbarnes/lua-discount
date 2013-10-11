@@ -1,6 +1,7 @@
-/// Lua bindings for the Discount Markdown library.
-// @copyright 2012-2013 Craig Barnes
-// @license ISC
+/** Lua bindings for the Discount Markdown library.
+ * @copyright 2012-2013 Craig Barnes
+ * @license ISC
+**/
 
 #include <stddef.h>
 #include <lua.h>
@@ -24,14 +25,13 @@ static const int option_codes[] = {
 };
 
 static int render(lua_State *L) {
+    MMIOT *doc;
+    mkd_flag_t flags = 0;
     size_t len;
     const char *str = luaL_checklstring(L, 1, &len);
-    mkd_flag_t flags = 0;
-    int num_args = lua_gettop(L);
-    MMIOT *doc;
-    int i;
+    int i, n;
 
-    for (i = 2; i <= num_args; i++) {
+    for (i = 2, n = lua_gettop(L); i <= n; i++) {
         int option_index = luaL_checkoption(L, i, NULL, options);
         flags |= option_codes[option_index];
     }

@@ -1,7 +1,8 @@
 VERSION = 0.2
 PREFIX  = /usr/local
-LIBDIR  = $(PREFIX)/lib/lua/5.1
-CFLAGS  = -O2 -Wall -fPIC
+LUAVER  = 5.2
+LIBDIR  = $(PREFIX)/lib/lua/$(LUAVER)
+CFLAGS  = -O2 -std=c89 -Wall -Wpedantic
 LDFLAGS = -shared
 LDLIBS  = -lmarkdown
 
