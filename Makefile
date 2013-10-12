@@ -2,7 +2,7 @@ VERSION = 0.2
 PREFIX  = /usr/local
 LUAVER  = 5.2
 LIBDIR  = $(PREFIX)/lib/lua/$(LUAVER)
-CFLAGS  = -O2 -std=c89 -Wall -Wpedantic
+CFLAGS  = -O2 -std=c89 -Wall -Wpedantic -Wextra
 LDFLAGS = -shared
 LDLIBS  = -lmarkdown
 

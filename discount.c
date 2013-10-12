@@ -1,7 +1,7 @@
 /** Lua bindings for the Discount Markdown library.
- * @copyright 2012-2013 Craig Barnes
- * @license ISC
-**/
+    @copyright 2012-2013 Craig Barnes
+    @license ISC
+*/
 
 #include <stddef.h>
 #include <lua.h>
@@ -24,39 +24,55 @@ static const int option_codes[] = {
     MKD_NOALPHALIST, MKD_NODLIST, MKD_EXTRA_FOOTNOTE, MKD_EMBED
 };
 
-static int render(lua_State *L) {
-    MMIOT *doc;
-    mkd_flag_t flags = 0;
-    size_t len;
-    const char *str = luaL_checklstring(L, 1, &len);
-    int i, n;
+static int error(lua_State *L, MMIOT *mm, const char *message) {
+    if (mm) mkd_cleanup(mm);
+    lua_pushnil(L);
+    lua_pushstring(L, message);
+    return 2;
+}
 
-    for (i = 2, n = lua_gettop(L); i <= n; i++) {
+static int render(lua_State *L) {
+    mkd_flag_t flags = 0;
+    MMIOT *mm = NULL;
+    char *doc = NULL;
+    char *toc = NULL;
+    size_t doc_size = 0, toc_size = 0, input_size = 0;
+    const char *input = luaL_checklstring(L, 1, &input_size);
+    int top = lua_gettop(L);
+    int i = 2;
+
+    while (i <= top) {
         int option_index = luaL_checkoption(L, i, NULL, options);
         flags |= option_codes[option_index];
+        i++;
     }
 
-    doc = mkd_string(str, len, flags);
-    if (mkd_compile(doc, flags)) {
-        char *result, *toc;
-        int result_size = 0, toc_size = 0;
-        if ((result_size = mkd_document(doc, &result)) != EOF) {
-            if (flags & MKD_CDATA) {
-                result_size = mkd_xml(result, result_size, &result);
-            }
-            lua_pushlstring(L, result, result_size);
+    if ((mm = mkd_string(input, input_size, flags)) == NULL)
+        return error(L, mm, "Unable to allocate structure");
 
-            toc_size = mkd_toc(doc, &toc);
-            lua_pushlstring(L, toc, toc_size);
+    if (mkd_compile(mm, flags) != 1)
+        return error(L, mm, "Failed to compile");
 
-            mkd_cleanup(doc);
-            return 2;
-        }
-        return 0;
+    doc_size = mkd_document(mm, &doc);
+    if (doc) {
+        lua_pushlstring(L, doc, doc_size);
     } else {
-        mkd_cleanup(doc);
-        return luaL_error(L, "failed to process document");
+        return error(L, mm, "NULL document");
     }
+
+    if (flags & MKD_TOC) {
+        toc_size = mkd_toc(mm, &toc);
+        if (toc) {
+            lua_pushlstring(L, toc, toc_size);
+        } else {
+            lua_pushliteral(L, "");
+        }
+    } else {
+        lua_pushnil(L);
+    }
+
+    mkd_cleanup(mm);
+    return 2;
 }
 
 int luaopen_discount(lua_State *L) {
