@@ -41,11 +41,8 @@ static int render(lua_State *L) {
     int top = lua_gettop(L);
     int i = 2;
 
-    while (i <= top) {
-        int option_index = luaL_checkoption(L, i, NULL, options);
-        flags |= option_codes[option_index];
-        i++;
-    }
+    for (; i <= top; i++)
+        flags |= option_codes[luaL_checkoption(L, i, NULL, options)];
 
     if ((mm = mkd_string(input, input_size, flags)) == NULL)
         return error(L, mm, "Unable to allocate structure");
@@ -54,22 +51,19 @@ static int render(lua_State *L) {
         return error(L, mm, "Failed to compile");
 
     doc_size = mkd_document(mm, &doc);
-    if (doc) {
+    if (doc)
         lua_pushlstring(L, doc, doc_size);
-    } else {
+    else
         return error(L, mm, "NULL document");
-    }
 
     if (flags & MKD_TOC) {
         toc_size = mkd_toc(mm, &toc);
-        if (toc) {
+        if (toc)
             lua_pushlstring(L, toc, toc_size);
-        } else {
+        else
             lua_pushliteral(L, "");
-        }
-    } else {
+    } else
         lua_pushnil(L);
-    }
 
     mkd_cleanup(mm);
     return 2;
