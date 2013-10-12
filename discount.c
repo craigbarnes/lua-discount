@@ -31,12 +31,21 @@ static int error(lua_State *L, MMIOT *mm, const char *message) {
     return 2;
 }
 
+static void addfield(lua_State *L, const char *k, const char *v) {
+    lua_pushstring(L, v);
+    lua_setfield(L, -2, k);
+}
+
+static void addlfield(lua_State *L, const char *k, const char *v, size_t n) {
+    lua_pushlstring(L, v, n);
+    lua_setfield(L, -2, k);
+}
+
 static int compile(lua_State *L) {
     mkd_flag_t flags = 0;
     MMIOT *mm = NULL;
-    char *doc = NULL;
-    char *toc = NULL;
-    size_t doc_size = 0, toc_size = 0, input_size = 0;
+    char *doc = NULL, *toc = NULL, *css = NULL;
+    size_t doc_size = 0, toc_size = 0, css_size = 0, input_size = 0;
     const char *input = luaL_checklstring(L, 1, &input_size);
     int top = lua_gettop(L);
     int i = 2;
@@ -51,22 +60,24 @@ static int compile(lua_State *L) {
         return error(L, mm, "Failed to compile");
 
     doc_size = mkd_document(mm, &doc);
-    if (doc)
-        lua_pushlstring(L, doc, doc_size);
-    else
+    if (!doc)
         return error(L, mm, "NULL document");
 
-    if (flags & MKD_TOC) {
-        toc_size = mkd_toc(mm, &toc);
-        if (toc)
-            lua_pushlstring(L, toc, toc_size);
-        else
-            lua_pushliteral(L, "");
-    } else
-        lua_pushnil(L);
+    lua_createtable(L, 0, 5);
+    addlfield(L, "body", doc, doc_size);
+    addfield(L, "title", mkd_doc_title(mm));
+    addfield(L, "author", mkd_doc_author(mm));
+    addfield(L, "date", mkd_doc_date(mm));
+
+    if ((css_size = mkd_css(mm, &css)) > 0 && css) {
+        addlfield(L, "css", css, css_size);
+    }
+
+    if ((flags & MKD_TOC) && (toc_size = mkd_toc(mm, &toc)) > 0 && toc)
+        addlfield(L, "index", toc, toc_size);
 
     mkd_cleanup(mm);
-    return 2;
+    return 1;
 }
 
 int luaopen_discount(lua_State *L) {

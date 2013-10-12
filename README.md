@@ -13,24 +13,38 @@ Usage
 
 The `discount` module provides a single function:
 
-    local doc, toc = discount(markdown, ...)
+```lua
+function discount(input, ...)
+```
 
 #### Parameters
 
-* `markdown`: A string of text in [Markdown format]
+* `input`: A string of text in [Markdown format]
 * `...`: zero or more option strings (see below)
 
 #### Returns
 
-* `doc`: the Markdown document rendered as HTML
-* `toc`: the table of contents as HTML (if `toc` option is enabled)
+1. A table, with the following fields:
+   * `body`: The Markdown document rendered as HTML
+   * `index`: A HTML table of contents (if the `toc` option was enabled)
+   * `css`: Any `<style>` elements found in the document, concatenated together
+   * `title`: The first line from the [Pandoc-style header]
+   * `author`: The second line from the Pandoc-style header
+   * `date`: The third line from the Pandoc-style header
+
+In the case of an error:
+
+1. `nil`
+2. An error message
 
 Example
 -------
 
-    local discount = require "discount"
-    local doc, toc = discount("This is **Markdown**", "toc", "nolinks")
-    print(doc, toc)
+```lua
+local discount = require "discount"
+local doc = assert(discount("# Hello", "toc", "strict"))
+print(doc.body, "\n\n\n", doc.index)
+```
 
 Options
 -------
@@ -68,6 +82,7 @@ embed           | Equivalent to combining `nolinks`, `noimages` and `tagtext`
 [PHP Markdown Extra]: http://michelf.com/projects/php-markdown/extra/
 [tables]: http://michelf.ca/projects/php-markdown/extra/#table
 [Pandoc]: http://johnmacfarlane.net/pandoc/
+[Pandoc-style header]: http://www.pell.portland.or.us/~orc/Code/discount/#headers
 [headers]: http://johnmacfarlane.net/pandoc/README.html#title-block
 [pseudo-protocols]: http://www.pell.portland.or.us/~orc/Code/discount/#pseudo
 [footnotes]: http://michelf.com/projects/php-markdown/extra/#footnotes

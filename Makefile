@@ -16,7 +16,7 @@ uninstall:
 	rm -f $(DESTDIR)$(LIBDIR)/discount.so
 
 check: discount.so test.lua
-	@lua test.lua && echo 'Tests passed'
+	@lua test.lua
 
 clean:
 	rm -f discount.so discount.o
