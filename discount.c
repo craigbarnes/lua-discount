@@ -31,7 +31,7 @@ static int error(lua_State *L, MMIOT *mm, const char *message) {
     return 2;
 }
 
-static int render(lua_State *L) {
+static int compile(lua_State *L) {
     mkd_flag_t flags = 0;
     MMIOT *mm = NULL;
     char *doc = NULL;
@@ -70,6 +70,6 @@ static int render(lua_State *L) {
 }
 
 int luaopen_discount(lua_State *L) {
-    lua_pushcfunction(L, render);
+    lua_pushcfunction(L, compile);
     return 1;
 }
