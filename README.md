@@ -6,7 +6,9 @@ Lua bindings for the [Discount] [Markdown] library.
 Installation
 ------------
 
-    make && sudo make install
+    make
+    make check
+    [sudo] make install
 
 Usage
 -----
