@@ -21,8 +21,8 @@ function discount(input, ...)
 
 ### Parameters
 
-* `input`: A string of text in [Markdown format]
-* `...`: zero or more option strings (see below)
+1. `input`: A string of text in [Markdown format]
+2. `...`: zero or more option strings (see below)
 
 ### Returns
 
