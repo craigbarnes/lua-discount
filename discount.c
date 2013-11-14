@@ -81,9 +81,8 @@ static int compile(lua_State *L) {
     add_field(L, "author", mkd_doc_author(mm));
     add_field(L, "date", mkd_doc_date(mm));
 
-    if ((css_size = mkd_css(mm, &css)) > 0 && css) {
+    if ((css_size = mkd_css(mm, &css)) > 0 && css)
         add_lfield(L, "css", css, css_size);
-    }
 
     if ((flags & MKD_TOC) && (toc_size = mkd_toc(mm, &toc)) > 0 && toc)
         add_lfield(L, "index", toc, toc_size);
