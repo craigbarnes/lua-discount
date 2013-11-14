@@ -36,19 +36,19 @@ static const int option_codes[] = {
     MKD_NOALPHALIST, MKD_NODLIST, MKD_EXTRA_FOOTNOTE, MKD_EMBED
 };
 
-static int error(lua_State *L, MMIOT *mm, const char *message) {
+static int push_error(lua_State *L, MMIOT *mm, const char *message) {
     if (mm) mkd_cleanup(mm);
     lua_pushnil(L);
     lua_pushstring(L, message);
     return 2;
 }
 
-static void addfield(lua_State *L, const char *k, const char *v) {
+static void add_field(lua_State *L, const char *k, const char *v) {
     lua_pushstring(L, v);
     lua_setfield(L, -2, k);
 }
 
-static void addlfield(lua_State *L, const char *k, const char *v, size_t n) {
+static void add_lfield(lua_State *L, const char *k, const char *v, size_t n) {
     lua_pushlstring(L, v, n);
     lua_setfield(L, -2, k);
 }
@@ -59,34 +59,34 @@ static int compile(lua_State *L) {
     char *doc = NULL, *toc = NULL, *css = NULL;
     size_t doc_size = 0, toc_size = 0, css_size = 0, input_size = 0;
     const char *input = luaL_checklstring(L, 1, &input_size);
-    int top = lua_gettop(L);
+    const int argc = lua_gettop(L);
     int i = 2;
 
-    for (; i <= top; i++)
+    for (; i <= argc; i++)
         flags |= option_codes[luaL_checkoption(L, i, NULL, options)];
 
     if ((mm = mkd_string(input, input_size, flags)) == NULL)
-        return error(L, mm, "Unable to allocate structure");
+        return push_error(L, mm, "Unable to allocate structure");
 
     if (mkd_compile(mm, flags) != 1)
-        return error(L, mm, "Failed to compile");
+        return push_error(L, mm, "Failed to compile");
 
     doc_size = mkd_document(mm, &doc);
     if (!doc)
-        return error(L, mm, "NULL document");
+        return push_error(L, mm, "NULL document");
 
     lua_createtable(L, 0, 5);
-    addlfield(L, "body", doc, doc_size);
-    addfield(L, "title", mkd_doc_title(mm));
-    addfield(L, "author", mkd_doc_author(mm));
-    addfield(L, "date", mkd_doc_date(mm));
+    add_lfield(L, "body", doc, doc_size);
+    add_field(L, "title", mkd_doc_title(mm));
+    add_field(L, "author", mkd_doc_author(mm));
+    add_field(L, "date", mkd_doc_date(mm));
 
     if ((css_size = mkd_css(mm, &css)) > 0 && css) {
-        addlfield(L, "css", css, css_size);
+        add_lfield(L, "css", css, css_size);
     }
 
     if ((flags & MKD_TOC) && (toc_size = mkd_toc(mm, &toc)) > 0 && toc)
-        addlfield(L, "index", toc, toc_size);
+        add_lfield(L, "index", toc, toc_size);
 
     mkd_cleanup(mm);
     return 1;
