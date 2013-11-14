@@ -75,7 +75,7 @@ static int compile(lua_State *L) {
     if (!doc)
         return push_error(L, mm, "NULL document");
 
-    lua_createtable(L, 0, 5);
+    lua_createtable(L, 0, 6);
     add_lfield(L, "body", doc, doc_size);
     add_field(L, "title", mkd_doc_title(mm));
     add_field(L, "author", mkd_doc_author(mm));

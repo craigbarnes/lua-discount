@@ -19,22 +19,24 @@ The `discount` module provides a single function:
 function discount(input, ...)
 ```
 
-#### Parameters
+### Parameters
 
 * `input`: A string of text in [Markdown format]
 * `...`: zero or more option strings (see below)
 
-#### Returns
+### Returns
 
 1. A table, with the following fields:
-   * `body`: The Markdown document rendered as HTML
-   * `index`: A HTML table of contents (if the `toc` option was enabled)
-   * `css`: Any `<style>` elements found in the document, concatenated together
-   * `title`: The first line from the [Pandoc-style header]
-   * `author`: The second line from the Pandoc-style header
-   * `date`: The third line from the Pandoc-style header
+   * `body`: The Markdown document rendered as HTML.
+   * `index`: A HTML table of contents (if the `toc` option was enabled,
+     otherwise `nil`).
+   * `css`: All `<style>` elements from the document, concatenated
+     together, or `nil` if no such elements were found.
+   * `title`: The first line from the [Pandoc-style header], or `nil`.
+   * `author`: The second line from the Pandoc-style header, or `nil`.
+   * `date`: The third line from the Pandoc-style header, or `nil`.
 
-In the case of an error:
+### Returns (on error)
 
 1. `nil`
 2. An error message
