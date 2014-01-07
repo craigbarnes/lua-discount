@@ -17,7 +17,7 @@ install: all
 	install -p -m0755 discount.so "$(DESTDIR)$(LUACDIR)/discount.so"
 
 uninstall:
-	$(RM) -r "$(DESTDIR)$(LUACDIR)/discount.so"
+	$(RM) "$(DESTDIR)$(LUACDIR)/discount.so"
 
 check: all test.lua
 	@$(RUNVIA) $(LUA) test.lua
