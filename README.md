@@ -15,14 +15,12 @@ Usage
 
 The `discount` module provides a single function:
 
-```lua
-function discount(input, ...)
-```
+    discount.compile(input, ...)
 
 ### Parameters
 
-1. `input`: A string of text in [Markdown format]
-2. `...`: zero or more option strings (see below)
+* `input`: A string of text in [Markdown format]
+* `...`: zero or more option strings (see below)
 
 ### Returns
 
@@ -44,11 +42,9 @@ function discount(input, ...)
 Example
 -------
 
-```lua
-local discount = require "discount"
-local doc = assert(discount("# Hello", "toc", "strict"))
-print(doc.body, "\n\n\n", doc.index)
-```
+    local discount = require "discount"
+    local doc = assert(discount.compile("# Hello", "toc", "strict"))
+    print(doc.body, "\n\n\n", doc.index)
 
 Options
 -------

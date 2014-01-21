@@ -1,6 +1,7 @@
 package.path  = ''
 package.cpath = './?.so'
-local markdown = require "discount"
+local discount = require "discount"
+local markdown = discount.compile
 local doc
 
 doc = markdown [[
