@@ -2,6 +2,7 @@ include findlua.mk
 
 VERSION = 0.2
 CFLAGS  = -O2 -fPIC -std=c89 -Wall -Wpedantic -Wextra
+CFLAGS += $(LUA_CFLAGS)
 LDLIBS  = -lmarkdown
 LUA     = lua
 
