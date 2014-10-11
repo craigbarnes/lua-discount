@@ -1,29 +1,28 @@
-include findlua.mk
+include lualib.mk
 
-VERSION = 0.2
-CFLAGS  = -O2 -fPIC -std=c89 -pedantic -Wall -Wextra
-CFLAGS += $(LUA_CFLAGS)
-LDLIBS  = -lmarkdown
-LUA     = lua
+DSC_LDLIBS  ?= -lmarkdown
+CFLAGS      ?= -g -O2 -std=c89 -pedantic -Wall -Wextra -Wshadow
+XCFLAGS     += -fPIC
+XCFLAGS     += $(LUA_CFLAGS) $(DSC_CFLAGS)
+XLDFLAGS    += $(DSC_LDFLAGS) $(DSC_LDLIBS)
 
 all: discount.so
 
 install: all
-	mkdir -p "$(DESTDIR)$(LUA_CMOD_DIR)/"
-	install -p -m0755 discount.so "$(DESTDIR)$(LUA_CMOD_DIR)/discount.so"
+	$(MKDIR) '$(DESTDIR)$(LUA_CMOD_DIR)/'
+	$(INSTALLX) discount.so '$(DESTDIR)$(LUA_CMOD_DIR)/'
 
 uninstall:
-	$(RM) "$(DESTDIR)$(LUA_CMOD_DIR)/discount.so"
+	$(RM) '$(DESTDIR)$(LUA_CMOD_DIR)/discount.so'
 
 check: all test.lua
-	@$(RUNVIA) $(LUA) test.lua
+	@$(LUA) test.lua
 
 check-valgrind:
-	@$(MAKE) check RUNVIA='valgrind -q --leak-check=full --error-exitcode=1'
+	@$(MAKE) check LUA='valgrind -q --error-exitcode=1 $(LUA)'
 
 clean:
-	$(RM) discount.so discount.o discount.lo discount.la
-	$(RM) -r .libs/
+	$(RM) discount.so discount.o
 
 
 .PHONY: all install uninstall check check-valgrind clean
