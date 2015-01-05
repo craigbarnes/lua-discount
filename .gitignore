@@ -1,2 +1,7 @@
+local.mk
 *.so
 *.o
+lua-discount-*.tar.gz
+discount-*.rockspec
+discount-*.rock
+tags

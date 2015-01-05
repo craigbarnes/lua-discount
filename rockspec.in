@@ -1,0 +1,35 @@
+package = "discount"
+version = "%VERSION%-1"
+supported_platforms = {"unix"}
+
+description = {
+    summary = "Lua bindings for the Discount Markdown library",
+    homepage = "https://github.com/craigbarnes/lua-discount",
+    license = "ISC"
+}
+
+source = {
+    url = "%URL%",
+    %SRCX%
+}
+
+dependencies = {
+    "lua >= 5.1"
+}
+
+external_dependencies = {
+    DISCOUNT = {
+        library = "markdown",
+        header = "mkdio.h"
+    }
+}
+
+build = {
+    type = "builtin",
+    modules = {
+        discount = {
+            sources = {"discount.c"},
+            libraries = {"markdown"},
+        }
+    }
+}
