@@ -19,7 +19,7 @@ The `discount` module provides a single function:
 
 ### Parameters
 
-* `input`: A string of text in [Markdown format]
+* `input`: A string of Markdown text to be parsed
 * `...`: zero or more option strings (see below)
 
 ### Returns
@@ -76,9 +76,8 @@ extrafootnote   | Enable [PHP Markdown Extra] style [footnotes]
 embed           | Equivalent to combining `nolinks`, `noimages` and `tagtext`
 
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
-[Markdown]: http://daringfireball.net/projects/markdown
-[Markdown format]: http://daringfireball.net/projects/markdown/syntax
-[SmartyPants]: http://daringfireball.net/projects/smartypants/
+[Markdown]: https://en.wikipedia.org/wiki/Markdown
+[SmartyPants]: http://www.pell.portland.or.us/~orc/Code/discount/#smartypants
 [PHP Markdown Extra]: http://michelf.com/projects/php-markdown/extra/
 [tables]: http://michelf.ca/projects/php-markdown/extra/#table
 [Pandoc]: http://johnmacfarlane.net/pandoc/
