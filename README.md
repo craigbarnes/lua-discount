@@ -6,6 +6,12 @@ Lua bindings for the [Discount] [Markdown] library.
 Installation
 ------------
 
+**With LuaRocks:**
+
+    luarocks install discount
+
+**With GNU Make:**
+
     make
     make check
     [sudo] make install
