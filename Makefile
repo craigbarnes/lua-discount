@@ -1,7 +1,7 @@
 include lualib.mk
 
 DSC_LDLIBS  ?= -lmarkdown
-CFLAGS      ?= -g -O2 -std=c89 -pedantic -Wall -Wextra -Wshadow
+CFLAGS      ?= -g -O2 -Wall -Wextra -Wshadow
 XCFLAGS     += -fPIC
 XCFLAGS     += $(LUA_CFLAGS) $(DSC_CFLAGS)
 XLDFLAGS    += $(DSC_LDFLAGS) $(DSC_LDLIBS)
