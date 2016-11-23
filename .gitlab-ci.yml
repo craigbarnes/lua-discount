@@ -13,6 +13,7 @@ libmarkdown.a:
 
 tests:
     stage: test
+    dependencies: [libmarkdown.a]
     image: quay.io/craigbarnes/lua-testing
     script:
         - make clean-obj all print-lua-v check USE_LOCAL_DISCOUNT=1
@@ -22,6 +23,7 @@ tests:
         - make clean-obj all print-lua-v check LUA_PC=luajit USE_LOCAL_DISCOUNT=1
 
 pages:
+    stage: build
     image: quay.io/craigbarnes/pandoc
     artifacts: {paths: [public]}
     only: [master]
