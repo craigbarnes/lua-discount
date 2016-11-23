@@ -76,7 +76,7 @@ noext           | Disable [pseudo-protocols]
 cdata           | Generate code for XML (using `![CDATA[...]]`)
 nosuperscript   | Disable superscript (`A^B`)
 norelaxed       | Emphasis happens *everywhere*
-notables        | Disable [PHP Markdown Extra] style [tables]
+notables        | Disable [Markdown Extra] style tables
 nostrikethrough | Disable `~~strikethrough~~`
 compat          | Compatability with MarkdownTest_1.0
 autolink        | Turn URLs into links, even without enclosing angle brackets
@@ -86,10 +86,10 @@ tabstop         | Expand tabs to 4 spaces
 nodivquote      | Disable `>%class%` blocks
 noalphalist     | Disable alphabetic lists
 nodlist         | Disable definition lists
-extrafootnote   | Enable [PHP Markdown Extra] style [footnotes]
+extrafootnote   | Enable [Markdown Extra] style footnotes
 nostyle         | Don't extract `<style>` blocks
 nodldiscount    | Disable Discount style definition lists
-dlextra         | Enable [PHP Markdown Extra] style definition lists
+dlextra         | Enable [Markdown Extra] style definition lists
 fencedcode      | Enable fenced code blocks
 idanchor        | Use `id=` anchors for TOC links
 githubtags      | Allow dash and underscore in element names
@@ -121,10 +121,8 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 [GNU Make]: https://www.gnu.org/software/make/
 [Lua]: https://www.lua.org/
 [SmartyPants]: http://www.pell.portland.or.us/~orc/Code/discount/#smartypants
-[PHP Markdown Extra]: http://michelf.com/projects/php-markdown/extra/
-[tables]: http://michelf.ca/projects/php-markdown/extra/#table
+[Markdown Extra]: https://michelf.ca/projects/php-markdown/extra/
 [Pandoc]: http://johnmacfarlane.net/pandoc/
 [Pandoc-style header]: http://www.pell.portland.or.us/~orc/Code/discount/#headers
 [headers]: http://johnmacfarlane.net/pandoc/README.html#title-block
 [pseudo-protocols]: http://www.pell.portland.or.us/~orc/Code/discount/#pseudo
-[footnotes]: http://michelf.com/projects/php-markdown/extra/#footnotes
