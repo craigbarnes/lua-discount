@@ -1,1 +1,4 @@
 .git* export-ignore
+.dist.sha1sums export-ignore
+mk/dist.mk export-ignore
+rockspec.in export-ignore

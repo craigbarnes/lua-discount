@@ -1,6 +1,6 @@
 include mk/lualib.mk
 include mk/discount.mk
-include mk/dist.mk
+-include mk/dist.mk
 
 CFLAGS      ?= -g -O2 -Wall -Wextra -Wshadow
 XCFLAGS     += -fPIC
