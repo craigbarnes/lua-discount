@@ -1,14 +1,5 @@
-include lualib.mk
-
-DISCOUNT_PKG = libmarkdown >= 2.2.1
-
-PKGCHECK = $(if \
-    $(shell pkg-config --short-errors --modversion '$(DISCOUNT_PKG)'),, \
-    $(error pkg-config error) \
-)
-
-DISCOUNT_CFLAGS ?= $(PKGCHECK) $(shell pkg-config --cflags '$(DISCOUNT_PKG)')
-DISCOUNT_LDFLAGS ?= $(PKGCHECK) $(shell pkg-config --libs '$(DISCOUNT_PKG)')
+include mk/lualib.mk
+include mk/discount.mk
 
 CFLAGS      ?= -g -O2 -Wall -Wextra -Wshadow
 XCFLAGS     += -fPIC
@@ -63,4 +54,6 @@ clean:
 	      discount-*.rockspec discount-*.rock
 
 
+.DEFAULT_GOAL = all
 .PHONY: all install uninstall check check-valgrind clean dist
+.DELETE_ON_ERROR:

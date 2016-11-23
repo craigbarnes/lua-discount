@@ -80,10 +80,10 @@ LUA_HEADERS  ?= $(addprefix $(LUA_INCDIR)/, lua.h lauxlib.h)
 
 
 %.so: %.o
-	$(CC) $(LDOPTIONS) -o $@ $<
+	$(CC) $(LDOPTIONS) -o $@ $^
 
 %.o: %.c
-	$(CC) $(CCOPTIONS) -c -o $@ $<
+	$(CC) $(CCOPTIONS) -c -o $@ $^
 
 
 .DELETE_ON_ERROR:
