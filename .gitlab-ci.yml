@@ -3,11 +3,11 @@ tests:
     before_script:
         - make -j`nproc` local-discount
     script:
-        - make clean-obj all print-lua-v check
-        - make clean-obj all print-lua-v check LUA_PC=lua53
-        - make clean-obj all print-lua-v check LUA_PC=lua52
-        - make clean-obj all print-lua-v check LUA_PC=lua51
-        - make clean-obj all print-lua-v check LUA_PC=luajit
+        - make clean-obj all print-lua-v check USE_LOCAL_DISCOUNT=1
+        - make clean-obj all print-lua-v check LUA_PC=lua53 USE_LOCAL_DISCOUNT=1
+        - make clean-obj all print-lua-v check LUA_PC=lua52 USE_LOCAL_DISCOUNT=1
+        - make clean-obj all print-lua-v check LUA_PC=lua51 USE_LOCAL_DISCOUNT=1
+        - make clean-obj all print-lua-v check LUA_PC=luajit USE_LOCAL_DISCOUNT=1
 
 pages:
     image: quay.io/craigbarnes/pandoc
