@@ -3,3 +3,11 @@ tests:
     script:
         - make -j`nproc` USE_LOCAL_DISCOUNT=1
         - make check
+
+pages:
+    image: quay.io/craigbarnes/pandoc
+    artifacts: {paths: [public]}
+    only: [master]
+    script:
+        - git fetch --tags
+        - make -j`nproc` dist check-dist
