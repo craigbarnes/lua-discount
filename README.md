@@ -3,6 +3,14 @@ lua-discount
 
 Lua bindings for the [Discount] [Markdown] library.
 
+Requirements
+------------
+
+* C compiler
+* [GNU Make] `>= 3.81`
+* [Lua] `>= 5.1`
+* [Discount] `>= 2.2.1`
+
 Installation
 ------------
 
@@ -79,6 +87,14 @@ nodivquote      | Disable `>%class%` blocks
 noalphalist     | Disable alphabetic lists
 nodlist         | Disable definition lists
 extrafootnote   | Enable [PHP Markdown Extra] style [footnotes]
+nostyle         | Don't extract `<style>` blocks
+nodldiscount    | Disable Discount style definition lists
+dlextra         | Enable [PHP Markdown Extra] style definition lists
+fencedcode      | Enable fenced code blocks
+idanchor        | Use `id=` anchors for TOC links
+githubtags      | Allow dash and underscore in element names
+urlencodedanchor| URL encode non-identifier chars instead of replacing with dots
+latex           | Handle embedded LaTeX escapes
 embed           | Equivalent to combining `nolinks`, `noimages` and `tagtext`
 
 [License]
@@ -102,6 +118,8 @@ CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 [License]: http://en.wikipedia.org/wiki/ISC_license "ISC License"
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
+[GNU Make]: https://www.gnu.org/software/make/
+[Lua]: https://www.lua.org/
 [SmartyPants]: http://www.pell.portland.or.us/~orc/Code/discount/#smartypants
 [PHP Markdown Extra]: http://michelf.com/projects/php-markdown/extra/
 [tables]: http://michelf.ca/projects/php-markdown/extra/#table
