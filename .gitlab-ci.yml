@@ -1,0 +1,5 @@
+tests:
+    image: quay.io/craigbarnes/lua-testing-extra
+    script:
+        - make -j`nproc` USE_LOCAL_DISCOUNT=1
+        - make check
