@@ -15,6 +15,8 @@ else
  DISCOUNT_LDFLAGS ?= $(PKGCHECK) $(shell pkg-config --libs '$(DISCOUNT_PKG)')
 endif
 
+local-discount: $(DISCOUNT_SRCDIR)/libmarkdown.a
+
 build/discount-%/libmarkdown.a: | build/discount-%/
 	cd $| && ./configure.sh
 	$(MAKE) -C $| CFLAGS='-O2 -fPIC'
@@ -29,4 +31,5 @@ build/:
 	mkdir -p $@
 
 
+.PHONY: local-discount
 .SECONDARY: $(DISCOUNT_SRCDIR)/

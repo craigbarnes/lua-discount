@@ -16,6 +16,9 @@ install: all
 uninstall:
 	$(RM) '$(DESTDIR)$(LUA_CMOD_DIR)/discount.so'
 
+print-lua-v:
+	@echo '$(LUA)'
+	@$(LUA) -v
 
 check: all test.lua
 	@$(LUA) test.lua
@@ -23,12 +26,18 @@ check: all test.lua
 check-valgrind:
 	@$(MAKE) check LUA='valgrind -q --error-exitcode=1 $(LUA)'
 
+clean: clean-obj
+	$(RM) lua-discount-*.tar.gz discount-*.rockspec discount-*.rock
 
-clean:
-	$(RM) discount.so discount.o lua-discount-*.tar.gz \
-	      discount-*.rockspec discount-*.rock
+clean-obj:
+	$(RM) discount.so discount.o
 
 
 .DEFAULT_GOAL = all
-.PHONY: all install uninstall check check-valgrind clean
+
+.PHONY: \
+    all install uninstall \
+    check check-valgrind print-lua-v \
+    clean clean-obj
+
 .DELETE_ON_ERROR:

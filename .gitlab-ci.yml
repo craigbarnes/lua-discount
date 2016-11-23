@@ -1,8 +1,13 @@
 tests:
     image: quay.io/craigbarnes/lua-testing
+    before_script:
+        - make -j`nproc` local-discount
     script:
-        - make -j`nproc` USE_LOCAL_DISCOUNT=1
-        - make check
+        - make clean-obj all print-lua-v check
+        - make clean-obj all print-lua-v check LUA_PC=lua53
+        - make clean-obj all print-lua-v check LUA_PC=lua52
+        - make clean-obj all print-lua-v check LUA_PC=lua51
+        - make clean-obj all print-lua-v check LUA_PC=luajit
 
 pages:
     image: quay.io/craigbarnes/pandoc
