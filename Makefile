@@ -1,10 +1,19 @@
 include lualib.mk
 
-DSC_LDLIBS  ?= -lmarkdown
+DISCOUNT_PKG = libmarkdown >= 2.2.1
+
+PKGCHECK = $(if \
+    $(shell pkg-config --short-errors --modversion '$(DISCOUNT_PKG)'),, \
+    $(error pkg-config error) \
+)
+
+DISCOUNT_CFLAGS ?= $(PKGCHECK) $(shell pkg-config --cflags '$(DISCOUNT_PKG)')
+DISCOUNT_LDFLAGS ?= $(PKGCHECK) $(shell pkg-config --libs '$(DISCOUNT_PKG)')
+
 CFLAGS      ?= -g -O2 -Wall -Wextra -Wshadow
 XCFLAGS     += -fPIC
-XCFLAGS     += $(LUA_CFLAGS) $(DSC_CFLAGS)
-XLDFLAGS    += $(DSC_LDFLAGS) $(DSC_LDLIBS)
+XCFLAGS     += $(LUA_CFLAGS) $(DISCOUNT_CFLAGS)
+XLDFLAGS    += $(DISCOUNT_LDFLAGS)
 LUAROCKS    ?= luarocks
 HOMEURL      = github.com/craigbarnes/lua-discount
 VERSION      = $(or $(shell git describe --abbrev=0),$(error No version info))
