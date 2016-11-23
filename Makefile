@@ -28,7 +28,7 @@ lua-discount-%.tar.gz:
 discount-%-1.rockspec: TARBALL = $(word 2, $^)
 discount-%-1.rockspec: URL = https://$(HOMEURL)/releases/download/$*/$(TARBALL)
 discount-%-1.rockspec: SRCX = md5 = '`md5sum $(TARBALL) | cut -d' ' -f1`'
-discount-%-1.rockspec: rockspec.in lua-discount-%.tar.gz | .git/refs/tags/%
+discount-%-1.rockspec: rockspec.in lua-discount-%.tar.gz
 	@sed "s|%VERSION%|$*|;s|%URL%|$(URL)|;s|%SRCX%|$(SRCX)|" $< > $@
 	@echo 'Generated: $@'
 
