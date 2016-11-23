@@ -1,7 +1,19 @@
-tests:
+libmarkdown.a:
+    stage: build
     image: quay.io/craigbarnes/lua-testing
-    before_script:
+    artifacts:
+        paths:
+            - build/discount-2.2.1/libmarkdown.a
+            - build/discount-2.2.1/mkdio.h
+    cache:
+        paths:
+            - build/discount-2.2.1.tar.gz
+    script:
         - make -j`nproc` local-discount
+
+tests:
+    stage: test
+    image: quay.io/craigbarnes/lua-testing
     script:
         - make clean-obj all print-lua-v check USE_LOCAL_DISCOUNT=1
         - make clean-obj all print-lua-v check LUA_PC=lua53 USE_LOCAL_DISCOUNT=1

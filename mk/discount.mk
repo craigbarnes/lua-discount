@@ -32,4 +32,4 @@ build/:
 
 
 .PHONY: local-discount
-.SECONDARY: $(DISCOUNT_SRCDIR)/
+.SECONDARY: $(DISCOUNT_SRCDIR)/ $(DISCOUNT_SRCDIR).tar.gz
