@@ -1,6 +1,5 @@
 tests:
     stage: test
-    dependencies: [libmarkdown.a]
     image: quay.io/craigbarnes/lua-testing
     script:
         - make check-discount-tarball
@@ -15,7 +14,7 @@ tests:
         - make check-luarocks-make LUAROCKS=luarocks-5.3
 
 pages:
-    stage: build
+    stage: deploy
     image: quay.io/craigbarnes/pandoc
     artifacts: {paths: [public]}
     only: [master]
