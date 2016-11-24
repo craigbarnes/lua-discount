@@ -16,7 +16,7 @@
 -include local.mk
 
 CC        ?= gcc
-LDFLAGS   ?= $(if $(ISDARWIN), -bundle -undefined dynamic_lookup, -shared)
+LIBFLAGS  ?= $(if $(ISDARWIN), -bundle -undefined dynamic_lookup, -shared)
 XLDFLAGS  += $(if $(ISLINUX), $(NOASNEEDED))
 NOASNEEDED = -Wl,--no-as-needed
 PKGCONFIG ?= pkg-config --silence-errors 2>/dev/null
@@ -34,7 +34,7 @@ ISDARWIN   = $(call EQUAL, $(UNAME), Darwin)
 ISLINUX    = $(call EQUAL, $(UNAME), Linux)
 
 CCOPTIONS  = $(XCFLAGS) $(CPPFLAGS) $(CFLAGS)
-LDOPTIONS  = $(XLDFLAGS) $(LDFLAGS) $(LDLIBS)
+LDOPTIONS  = $(XLDFLAGS) $(LIBFLAGS) $(LDLIBS)
 
 LUA_PC_NAMES = \
     lua53 lua5.3 lua-5.3 \
