@@ -1,5 +1,6 @@
 DISCOUNT_PKG = libmarkdown >= 2.2.1
 DISCOUNT_SRCDIR = build/discount-2.2.1
+DISCOUNT_SHA1SUM = 6075ba569c5e2c7f334de001e1f844bfc8e4db44
 
 PKGCHECK = $(if \
     $(shell pkg-config --short-errors --modversion '$(DISCOUNT_PKG)'),, \
@@ -17,6 +18,9 @@ endif
 
 local-discount: $(DISCOUNT_SRCDIR)/libmarkdown.a
 
+check-discount-tarball: | $(DISCOUNT_SRCDIR).tar.gz
+	echo '$(DISCOUNT_SHA1SUM)  $|' | sha1sum -c -
+
 build/discount-%/libmarkdown.a: | build/discount-%/
 	cd $| && ./configure.sh
 	$(MAKE) -C $| CFLAGS='-O2 -fPIC'
@@ -31,5 +35,5 @@ build/:
 	mkdir -p $@
 
 
-.PHONY: local-discount
+.PHONY: local-discount check-discount-tarball
 .SECONDARY: $(DISCOUNT_SRCDIR)/ $(DISCOUNT_SRCDIR).tar.gz

@@ -9,6 +9,7 @@ libmarkdown.a:
         paths:
             - build/discount-2.2.1.tar.gz
     script:
+        - make check-discount-tarball
         - make -j`nproc` local-discount
 
 tests:
