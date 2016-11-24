@@ -27,7 +27,7 @@ build/discount-%/libmarkdown.a: | build/discount-%/
 	# CC, CFLAGS and LDFLAGS, which the (broken) Discount Makefile
 	# can't handle. Overriding these flags here is hackish but should
 	# work until the Discount build system is fixed.
-	$(MAKE) -C $| CFLAGS='-O2 -fPIC -I.' LDFLAGS=
+	$(MAKE) -C $| libmarkdown CFLAGS='-O2 -fPIC -I.' LDFLAGS=
 
 build/discount-%/: | build/discount-%.tar.gz
 	cd build && gunzip -d < discount-$*.tar.gz | tar -xf -

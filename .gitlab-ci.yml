@@ -20,4 +20,5 @@ pages:
     only: [master]
     script:
         - git fetch --tags
-        - make -j`nproc` dist check-dist
+        - make -j`nproc` dist
+        - make check-dist
