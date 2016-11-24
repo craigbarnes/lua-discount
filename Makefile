@@ -27,7 +27,8 @@ check-valgrind:
 	@$(MAKE) check LUA='valgrind -q --error-exitcode=1 $(LUA)'
 
 clean: clean-obj
-	$(RM) lua-discount-*.tar.gz discount-*.rockspec discount-*.rock
+	$(RM) -r build/ public/
+	$(RM) discount-*.rockspec discount-*.rock
 
 clean-obj:
 	$(RM) discount.so discount.o

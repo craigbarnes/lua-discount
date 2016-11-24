@@ -9,7 +9,6 @@ tests:
         - make clean-obj all print-lua-v check LUA_PC=lua52 USE_LOCAL_DISCOUNT=1
         - make clean-obj all print-lua-v check LUA_PC=lua51 USE_LOCAL_DISCOUNT=1
         - make clean-obj all print-lua-v check LUA_PC=luajit USE_LOCAL_DISCOUNT=1
-        - rm -rf build
         - make clean
         - make check-luarocks-make LUAROCKS=luarocks-5.3
 
