@@ -17,19 +17,22 @@ dependencies = {
     "lua >= 5.1"
 }
 
-external_dependencies = {
-    DISCOUNT = {
-        library = "markdown",
-        header = "mkdio.h"
-    }
-}
-
 build = {
-    type = "builtin",
-    modules = {
-        discount = {
-            sources = {"discount.c"},
-            libraries = {"markdown"},
-        }
+    type = "make",
+    variables = {
+        LUA = "$(LUA)",
+        LUA_INCDIR = "$(LUA_INCDIR)",
+        LUA_LIBDIR = "$(LUA_LIBDIR)",
+        LUA_CFLAGS = "-I$(LUA_INCDIR)",
+        LUA_PC = "none"
+    },
+    build_variables = {
+        CFLAGS = "$(CFLAGS)",
+        LDFLAGS = "$(LIBFLAG)",
+        USE_LOCAL_DISCOUNT = "1"
+    },
+    install_variables = {
+        LUA_CMOD_DIR = "$(LIBDIR)",
+        LUA_LMOD_DIR = "$(LUADIR)"
     }
 }

@@ -1,3 +1,5 @@
+LUAROCKS ?= luarocks
+
 HOMEURL = https://craigbarnes.gitlab.io/lua-discount
 GITURL  = https://gitlab.com/craigbarnes/lua-discount.git
 TAGS    = 0.0.1 0.0.2 0.1.0
@@ -6,6 +8,10 @@ dist: $(addprefix public/dist/lua-discount-, $(addsuffix .tar.gz, $(TAGS)))
 
 check-dist: dist
 	sha1sum -c .dist.sha1sums
+
+check-luarocks-make: | discount-scm-1.rockspec
+	$(LUAROCKS) --tree='$(CURDIR)/build/rocks-tree' make $|
+	$(RM) -r build/rocks-tree/
 
 public/dist/lua-discount-%.tar.gz: | public/dist/
 	git archive --prefix=lua-discount-$*/ -o $@ $*
@@ -25,4 +31,4 @@ public/dist/:
 	$(MKDIR) $@
 
 
-.PHONY: dist check-dist
+.PHONY: dist check-dist check-luarocks-make

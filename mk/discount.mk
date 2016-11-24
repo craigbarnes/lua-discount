@@ -23,7 +23,11 @@ check-discount-tarball: | $(DISCOUNT_SRCDIR).tar.gz
 
 build/discount-%/libmarkdown.a: | build/discount-%/
 	cd $| && ./configure.sh
-	$(MAKE) -C $| CFLAGS='-O2 -fPIC'
+	# LuaRocks exports some variables into the environment, including
+	# CC, CFLAGS and LDFLAGS, which the (broken) Discount Makefile
+	# can't handle. Overriding these flags here is hackish but should
+	# work until the Discount build system is fixed.
+	$(MAKE) -C $| CFLAGS='-O2 -fPIC -I.' LDFLAGS=
 
 build/discount-%/: | build/discount-%.tar.gz
 	cd build && gunzip -d < discount-$*.tar.gz | tar -xf -

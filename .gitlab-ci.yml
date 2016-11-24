@@ -1,27 +1,18 @@
-libmarkdown.a:
-    stage: build
-    image: quay.io/craigbarnes/lua-testing
-    artifacts:
-        paths:
-            - build/discount-2.2.1/libmarkdown.a
-            - build/discount-2.2.1/mkdio.h
-    cache:
-        paths:
-            - build/discount-2.2.1.tar.gz
-    script:
-        - make check-discount-tarball
-        - make -j`nproc` local-discount
-
 tests:
     stage: test
     dependencies: [libmarkdown.a]
     image: quay.io/craigbarnes/lua-testing
     script:
+        - make check-discount-tarball
+        - make -j`nproc` local-discount
         - make clean-obj all print-lua-v check USE_LOCAL_DISCOUNT=1
         - make clean-obj all print-lua-v check LUA_PC=lua53 USE_LOCAL_DISCOUNT=1
         - make clean-obj all print-lua-v check LUA_PC=lua52 USE_LOCAL_DISCOUNT=1
         - make clean-obj all print-lua-v check LUA_PC=lua51 USE_LOCAL_DISCOUNT=1
         - make clean-obj all print-lua-v check LUA_PC=luajit USE_LOCAL_DISCOUNT=1
+        - rm -rf build
+        - make clean
+        - make check-luarocks-make LUAROCKS=luarocks-5.3
 
 pages:
     stage: build
