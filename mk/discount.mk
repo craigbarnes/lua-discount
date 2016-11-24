@@ -23,7 +23,7 @@ check-discount-tarball: | $(DISCOUNT_SRCDIR).tar.gz
 
 build/discount-%/libmarkdown.a: | build/discount-%/
 	cd $| && ./configure.sh
-	$(MAKE) -C $| libmarkdown
+	$(MAKE) -C $| libmarkdown CFLAGS='-O2 -fPIC'
 
 build/discount-%/: | build/discount-%.tar.gz
 	cd build && gunzip -d < discount-$*.tar.gz | tar -xf -
