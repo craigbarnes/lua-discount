@@ -19,15 +19,19 @@ CC        ?= gcc
 LIBFLAGS  ?= $(if $(ISDARWIN), -bundle -undefined dynamic_lookup, -shared)
 XLDFLAGS  += $(if $(ISLINUX), $(NOASNEEDED))
 NOASNEEDED = -Wl,--no-as-needed
-PKGCONFIG ?= pkg-config --silence-errors 2>/dev/null
+
 MKDIR     ?= mkdir -p
 INSTALL   ?= install -p -m 0644
 INSTALLX  ?= install -p -m 0755
 RM        ?= rm -f
 LUA       ?= $(or $(LUA_WHICH), $(error No Lua interpreter found))
 
-PC_EXISTS  = $(PKGCONFIG) --exists $(1) && echo $(1)
-FIND_PC    = $(shell for P in $(1); do $(call PC_EXISTS, $$P) && break; done)
+PKGCONFIG ?= pkg-config
+PKGCONFIG_Q = $(PKGCONFIG) --silence-errors 2>/dev/null
+PKGCONFIG_LUA = $(shell $(PKGCONFIG_Q) $(1) $(_LUA_PC) $(2))
+PKGEXISTS = $(PKGCONFIG_Q) --exists $(1) && echo $(1)
+PKGFIND = $(shell for P in $(1); do $(call PKGEXISTS, $$P) && break; done)
+
 EQUAL      = $(and $(findstring $(1),$(2)),$(findstring $(2),$(1)))
 UNAME      = $(shell uname)
 ISDARWIN   = $(call EQUAL, $(UNAME), Darwin)
@@ -51,30 +55,28 @@ LUA_BIN_NAMES = $(addprefix lua, $(LUA_VERSION_SUFFIXES)) $(_LUA_PC)
 LUA_WHICH = $(firstword $(shell which $(LUA_BIN_NAMES) 2>/dev/null))
 
 LUA_PC ?= $(or \
-    $(call FIND_PC, $(LUA_PC_NAMES)), \
+    $(call PKGFIND, $(LUA_PC_NAMES)), \
     $(error No pkg-config file found for Lua) \
 )
 
 # The $(LUA_PC) variable may be set to a non-existant name via the
 # command-line, so we must check that it exists (possibly twice).
 _LUA_PC = $(or \
-    $(shell $(call PC_EXISTS, $(LUA_PC))), \
+    $(shell $(call PKGEXISTS, $(LUA_PC))), \
     $(error No pkg-config file found with name '$(LUA_PC)') \
 )
 
-# Some distros put the Lua headers in versioned sub-directories
-# and thus require extra CFLAGS
-LUA_CFLAGS   ?= $(shell $(PKGCONFIG) --cflags $(_LUA_PC))
+LUA_CFLAGS ?= $(call PKGCONFIG_LUA, --cflags)
 
 # Some pkg-config files have convenient variables for module paths
-LUA_PC_LMOD   = $(shell $(PKGCONFIG) --variable=INSTALL_LMOD $(_LUA_PC))
-LUA_PC_CMOD   = $(shell $(PKGCONFIG) --variable=INSTALL_CMOD $(_LUA_PC))
+LUA_PC_LMOD = $(call PKGCONFIG_LUA, --variable=INSTALL_LMOD)
+LUA_PC_CMOD = $(call PKGCONFIG_LUA, --variable=INSTALL_CMOD)
 
 # Others force us to piece them together from parts...
-LUA_PREFIX   ?= $(shell $(PKGCONFIG) --variable=prefix $(_LUA_PC))
-LUA_LIBDIR   ?= $(shell $(PKGCONFIG) --variable=libdir $(_LUA_PC))
-LUA_INCDIR   ?= $(shell $(PKGCONFIG) --variable=includedir $(_LUA_PC))
-LUA_VERSION  ?= $(shell $(PKGCONFIG) --modversion $(_LUA_PC) | grep -o '^.\..')
+LUA_PREFIX ?= $(call PKGCONFIG_LUA, --variable=prefix)
+LUA_LIBDIR ?= $(call PKGCONFIG_LUA, --variable=libdir)
+LUA_INCDIR ?= $(call PKGCONFIG_LUA, --variable=includedir)
+LUA_VERSION ?= $(call PKGCONFIG_LUA, --modversion, | grep -o '^.\..')
 
 LUA_LMOD_DIR ?= $(strip $(if $(LUA_PC_LMOD), $(LUA_PC_LMOD), \
                 $(LUA_PREFIX)/share/lua/$(LUA_VERSION)))
@@ -89,7 +91,7 @@ LUA_HEADERS  ?= $(addprefix $(LUA_INCDIR)/, lua.h lauxlib.h)
 	$(CC) $(LDOPTIONS) -o $@ $^
 
 %.o: %.c
-	$(CC) $(CCOPTIONS) -c -o $@ $^
+	$(CC) $(CCOPTIONS) -c -o $@ $<
 
 
 .DELETE_ON_ERROR:
