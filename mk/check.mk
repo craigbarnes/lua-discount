@@ -1,4 +1,3 @@
-LUAROCKS ?= luarocks
 PRINTVAR = printf '\033[1m%-17s\033[0m= %s\n' '$(1)' '$(strip $($(1)))'
 
 USERVARS = \
@@ -10,14 +9,6 @@ check: all
 
 check-valgrind:
 	@$(MAKE) check LUA='valgrind -q --error-exitcode=1 $(LUA)'
-
-check-dist: dist
-	sha1sum -c .dist.sha1sums
-
-check-luarocks-build check-luarocks-make: \
-check-luarocks-%: | discount-scm-1.rockspec
-	$(LUAROCKS) --tree='$(CURDIR)/build/$@' $* $|
-	$(RM) -r build/$@/
 
 check-all:
 	$(MAKE) -s clean-obj all print-vars check
@@ -31,6 +22,4 @@ print-vars:
 	@$(LUA) -v
 
 
-.PHONY: \
-    check check-valgrind check-all print-vars \
-    check-dist check-luarocks-make check-luarocks-build
+.PHONY: check check-valgrind check-all print-vars

@@ -1,3 +1,5 @@
+LUAROCKS ?= luarocks
+
 HOMEURL = https://craigbarnes.gitlab.io/lua-discount
 GITURL  = git+https://gitlab.com/craigbarnes/lua-discount.git
 TAGS    = 0.0.1 0.0.2 0.1.0
@@ -21,5 +23,13 @@ discount-scm-1.rockspec: rockspec.in
 public/dist/:
 	$(MKDIR) $@
 
+check-dist: dist
+	sha1sum -c .dist.sha1sums
 
-.PHONY: dist
+check-luarocks-build check-luarocks-make: \
+check-luarocks-%: | discount-scm-1.rockspec
+	$(LUAROCKS) --tree='$(CURDIR)/build/$@' $* $|
+	$(RM) -r build/$@/
+
+
+.PHONY: dist check-dist check-luarocks-make check-luarocks-build
