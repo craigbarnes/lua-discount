@@ -4,13 +4,8 @@ tests:
     script:
         - make check-discount-tarball
         - make -j`nproc` local-discount
-        - make clean-obj all print-lua-v check USE_LOCAL_DISCOUNT=1
-        - make clean-obj all print-lua-v check LUA_PC=lua53 USE_LOCAL_DISCOUNT=1
-        - make clean-obj all print-lua-v check LUA_PC=lua52 USE_LOCAL_DISCOUNT=1
-        - make clean-obj all print-lua-v check LUA_PC=lua51 USE_LOCAL_DISCOUNT=1
-        - make clean-obj all print-lua-v check LUA_PC=luajit USE_LOCAL_DISCOUNT=1
-        - make clean
-        - make check-luarocks-make LUAROCKS=luarocks-5.3
+        - make check-all USE_LOCAL_DISCOUNT=1
+        - make clean check-luarocks-make LUAROCKS=luarocks-5.3
         - make check-luarocks-build LUAROCKS=luarocks-5.3
 
 pages:

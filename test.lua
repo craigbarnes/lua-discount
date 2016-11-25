@@ -26,4 +26,4 @@ doc = markdown("# Heading", "toc")
 assert(doc.body)
 assert(doc.index)
 
-print "All tests passed"
+io.write("\27[1;32mAll tests passed\27[0m\n\n")

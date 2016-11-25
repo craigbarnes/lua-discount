@@ -1,5 +1,7 @@
+include mk/compat.mk
 include mk/lualib.mk
 include mk/discount.mk
+include mk/check.mk
 -include mk/dist.mk
 
 CFLAGS      ?= -g -O2 -Wall -Wextra -Wshadow
@@ -16,16 +18,6 @@ install: all
 uninstall:
 	$(RM) '$(DESTDIR)$(LUA_CMOD_DIR)/discount.so'
 
-print-lua-v:
-	@echo '$(LUA)'
-	@$(LUA) -v
-
-check: all test.lua
-	@$(LUA) test.lua
-
-check-valgrind:
-	@$(MAKE) check LUA='valgrind -q --error-exitcode=1 $(LUA)'
-
 clean: clean-obj
 	$(RM) -r build/ public/
 	$(RM) discount-*.rockspec discount-*.rock
@@ -35,10 +27,5 @@ clean-obj:
 
 
 .DEFAULT_GOAL = all
-
-.PHONY: \
-    all install uninstall \
-    check check-valgrind print-lua-v \
-    clean clean-obj
-
+.PHONY: all install uninstall clean clean-obj
 .DELETE_ON_ERROR:
