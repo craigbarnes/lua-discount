@@ -21,6 +21,7 @@ local-discount: $(DISCOUNT_SRCDIR)/libmarkdown.a
 check-discount-tarball: | $(DISCOUNT_SRCDIR).tar.gz
 	echo '$(DISCOUNT_SHA1SUM)  $|' | sha1sum -c -
 
+build/discount-%/libmarkdown.a: private MAKEOVERRIDES =
 build/discount-%/libmarkdown.a: | build/discount-%/
 	cd $| && ./configure.sh
 	$(MAKE) -C $| libmarkdown CFLAGS='-O2 -fPIC'
