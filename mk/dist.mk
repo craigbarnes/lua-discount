@@ -2,7 +2,7 @@ LUAROCKS ?= luarocks
 
 HOMEURL = https://craigbarnes.gitlab.io/lua-discount
 GITURL  = git+https://gitlab.com/craigbarnes/lua-discount.git
-TAGS    = 0.0.1 0.0.2 0.1.0 0.2
+TAGS    = 0.0.1 0.0.2 0.1.0 0.2 0.2.1
 
 dist: $(addprefix public/dist/lua-discount-, $(addsuffix .tar.gz, $(TAGS)))
 
