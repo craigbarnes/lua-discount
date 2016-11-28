@@ -18,19 +18,7 @@ dependencies = {
 }
 
 build = {
-    type = "make",
-    variables = {
-        LUA = "$(LUA)",
-        LUA_CFLAGS = "-I$(LUA_INCDIR)",
-        LUA_PC = "_disabled",
-    },
-    build_variables = {
-        CFLAGS = "$(CFLAGS)",
-        LIBFLAGS = "$(LIBFLAG)",
-        USE_LOCAL_DISCOUNT = "1"
-    },
-    install_variables = {
-        LUA_CMOD_DIR = "$(LIBDIR)",
-        LUA_LMOD_DIR = "$(LUADIR)"
-    }
+    type = "command",
+    build_command = "make CFLAGS='$(CFLAGS)' LIBFLAGS='$(LIBFLAG)' LUA_CFLAGS='-I$(LUA_INCDIR)' LUA='$(LUA)' LUA_PC=none USE_LOCAL_DISCOUNT=1",
+    install_command = "make install LUA_CMOD_DIR='$(LIBDIR)' LUA_LMOD_DIR='$(LUADIR)' LUA_PC=none"
 }
