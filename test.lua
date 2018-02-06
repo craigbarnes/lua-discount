@@ -1,29 +1,31 @@
 package.path  = ''
 package.cpath = './?.so'
 local discount = require "discount"
-local markdown = discount.compile
-local doc
+local compile = assert(discount.compile)
 
-doc = markdown [[
-% Title ::
-% Author ::
-% Date ::
-*Text*
-]]
-assert(doc.title == "Title ::")
-assert(doc.author == "Author ::")
-assert(doc.date == "Date ::")
-assert(doc.body == "<p><em>Text</em></p>")
+do
+    local doc = assert(compile "%Title ::\n%Author ::\n%Date ::\n*Text*\n")
+    assert(doc.title == "Title ::")
+    assert(doc.author == "Author ::")
+    assert(doc.date == "Date ::")
+    assert(doc.body == "<p><em>Text</em></p>")
+end
 
-doc = markdown "<style>a {color: red}</style>Text"
-assert(doc.css == "<style>a {color: red}</style>\n")
+do
+    local doc = assert(compile "<style>a {color: red}</style>Text")
+    assert(doc.css == "<style>a {color: red}</style>\n")
+end
 
-doc = markdown("", "toc")
-assert(doc.body == "")
-assert(not doc.index)
+do
+    local doc = assert(compile("", "toc"))
+    assert(doc.body == "")
+    assert(not doc.index)
+end
 
-doc = markdown("# Heading", "toc")
-assert(doc.body)
-assert(doc.index)
+do
+    local doc = assert(compile("# Heading", "toc"))
+    assert(doc.body)
+    assert(doc.index)
+end
 
-io.write("\27[1;32mAll tests passed\27[0m\n\n")
+io.stderr:write("\27[1;32mAll tests passed\27[0m\n")

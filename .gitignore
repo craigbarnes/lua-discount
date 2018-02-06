@@ -1,9 +1,4 @@
-build/
-public/
-local.mk
-*.so
-*.o
+discount.so
+discount.o
 lua-discount-*.tar.gz
-discount-*.rockspec
-discount-*.rock
 tags
