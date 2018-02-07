@@ -2,7 +2,6 @@ tests:
     stage: test
     image: registry.gitlab.com/craigbarnes/dockerfiles/lua-testing
     script:
-        - make check
         - luarocks-5.3 make
         - lua5.3 test.lua
         - luarocks-5.2 make
