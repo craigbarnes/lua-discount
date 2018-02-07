@@ -3,11 +3,9 @@ tests:
     image: registry.gitlab.com/craigbarnes/dockerfiles/lua-testing
     script:
         - apt-get update && apt-get -y install libmarkdown2-dev
-        - export DISCOUNT_INCDIR=/usr/include/x86_64-linux-gnu/
-        - export DISCOUNT_LIBDIR=/usr/lib/x86_64-linux-gnu/
-        - luarocks-5.3 make
-        - lua5.3 test.lua
-        - luarocks-5.2 make
-        - lua5.2 test.lua
-        - luarocks-5.1 make
-        - lua5.1 test.lua
+        - for v in 5.3 5.2 5.1; do
+              luarocks-$v make
+                  DISCOUNT_INCDIR=/usr/include/x86_64-linux-gnu
+                  DISCOUNT_LIBDIR=/usr/lib/x86_64-linux-gnu
+              && lua$v test.lua ;
+          done
