@@ -15,6 +15,9 @@ discount.so: discount.o
 discount.o: discount.c
 	$(CC) $(XCFLAGS) $(CPPFLAGS) $(CFLAGS) $(CWARNS) -c -o $@ $<
 
+lua-discount-%.tar.gz:
+	git archive --prefix=lua-discount-$*/ -o $@ $*
+
 check: all
 	$(LUA) test.lua
 
