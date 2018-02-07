@@ -15,6 +15,7 @@
  CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
+#include <limits.h>
 #include <stddef.h>
 #include <lua.h>
 #include <lauxlib.h>
@@ -31,7 +32,7 @@ static const char *const options[] = {
     NULL
 };
 
-static const int option_codes[] = {
+static const unsigned int option_codes[] = {
     MKD_NOLINKS, MKD_NOIMAGE, MKD_NOPANTS, MKD_NOHTML, MKD_STRICT,
     MKD_TAGTEXT, MKD_NO_EXT, MKD_CDATA, MKD_NOSUPERSCRIPT, MKD_NORELAXED,
     MKD_NOTABLES, MKD_NOSTRIKETHROUGH, MKD_TOC, MKD_1_COMPAT, MKD_AUTOLINK,
@@ -40,13 +41,6 @@ static const int option_codes[] = {
     MKD_NODLDISCOUNT, MKD_DLEXTRA, MKD_FENCEDCODE, MKD_IDANCHOR,
     MKD_GITHUBTAGS, MKD_URLENCODEDANCHOR, MKD_LATEX, MKD_EMBED
 };
-
-static int push_error(lua_State *L, MMIOT *mm, const char *message) {
-    if (mm) mkd_cleanup(mm);
-    lua_pushnil(L);
-    lua_pushstring(L, message);
-    return 2;
-}
 
 static void add_field(lua_State *L, const char *k, const char *v) {
     lua_pushstring(L, v);
@@ -59,40 +53,58 @@ static void add_lfield(lua_State *L, const char *k, const char *v, size_t n) {
 }
 
 static int compile(lua_State *L) {
-    mkd_flag_t flags = 0;
-    MMIOT *mm = NULL;
-    char *doc = NULL, *toc = NULL, *css = NULL;
-    size_t doc_size = 0, toc_size = 0, css_size = 0, input_size = 0;
-    const char *input = luaL_checklstring(L, 1, &input_size);
-    const int argc = lua_gettop(L);
-    int i = 2;
+    MMIOT *doc;
+    unsigned int flags = 0;
+    char *body = NULL, *toc = NULL, *css = NULL;
+    int body_size, toc_size, css_size, i, argc;
 
-    for (; i <= argc; i++)
+    int input_size;
+    size_t lstr_size;
+    const char *input = luaL_checklstring(L, 1, &lstr_size);
+    luaL_argcheck(L, lstr_size < INT_MAX, 1, "string too long");
+    input_size = (int) lstr_size;
+
+    for (i = 2, argc = lua_gettop(L); i <= argc; i++) {
         flags |= option_codes[luaL_checkoption(L, i, NULL, options)];
+    }
 
-    if ((mm = mkd_string(input, input_size, flags)) == NULL)
-        return push_error(L, mm, "Unable to allocate structure");
+    doc = mkd_string(input, input_size, flags);
+    if (doc == NULL) {
+        lua_pushnil(L);
+        lua_pushstring(L, "mkd_string() returned NULL");
+        return 2;
+    }
 
-    if (mkd_compile(mm, flags) != 1)
-        return push_error(L, mm, "Failed to compile");
+    if (mkd_compile(doc, flags) != 1) {
+        mkd_cleanup(doc);
+        lua_pushnil(L);
+        lua_pushstring(L, "mkd_compile() failed");
+        return 2;
+    }
 
-    doc_size = mkd_document(mm, &doc);
-    if (!doc)
-        return push_error(L, mm, "NULL document");
+    body_size = mkd_document(doc, &body);
+    if (body == NULL || body_size < 0) {
+        mkd_cleanup(doc);
+        lua_pushnil(L);
+        lua_pushstring(L, "mkd_document() failed");
+        return 2;
+    }
 
-    lua_createtable(L, 0, 6);
-    add_lfield(L, "body", doc, doc_size);
-    add_field(L, "title", mkd_doc_title(mm));
-    add_field(L, "author", mkd_doc_author(mm));
-    add_field(L, "date", mkd_doc_date(mm));
+    lua_createtable(L, 0, 4);
+    add_lfield(L, "body", body, (size_t) body_size);
+    add_field(L, "title", mkd_doc_title(doc));
+    add_field(L, "author", mkd_doc_author(doc));
+    add_field(L, "date", mkd_doc_date(doc));
 
-    if ((css_size = mkd_css(mm, &css)) > 0 && css)
-        add_lfield(L, "css", css, css_size);
+    if ((css_size = mkd_css(doc, &css)) > 0 && css) {
+        add_lfield(L, "css", css, (size_t) css_size);
+    }
 
-    if ((flags & MKD_TOC) && (toc_size = mkd_toc(mm, &toc)) > 0 && toc)
-        add_lfield(L, "index", toc, toc_size);
+    if ((flags & MKD_TOC) && (toc_size = mkd_toc(doc, &toc)) > 0 && toc) {
+        add_lfield(L, "index", toc, (size_t) toc_size);
+    }
 
-    mkd_cleanup(mm);
+    mkd_cleanup(doc);
     return 1;
 }
 

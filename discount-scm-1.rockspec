@@ -1,6 +1,5 @@
 package = "discount"
 version = "scm-1"
-supported_platforms = {"unix"}
 
 description = {
     summary = "Lua bindings for the Discount Markdown library",
