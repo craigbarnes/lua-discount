@@ -49,7 +49,7 @@ Example
 
     local discount = require "discount"
     local doc = assert(discount.compile("# Hello", "toc", "strict"))
-    print(doc.body, "\n\n\n", doc.index)
+    io.write(doc.body, "\n\n\n", doc.index)
 
 Options
 -------
