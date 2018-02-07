@@ -1,3 +1,5 @@
+stages: [test, dist]
+
 tests:
     stage: test
     image: registry.gitlab.com/craigbarnes/dockerfiles/lua-testing
@@ -11,7 +13,7 @@ tests:
           done
 
 pages:
-    stage: deploy
+    stage: dist
     image: debian:stable
     artifacts: {paths: [public]}
     only: [master]
