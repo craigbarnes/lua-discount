@@ -1,5 +1,5 @@
 package = "discount"
-version = "scm-1"
+version = "scm-2"
 
 description = {
     summary = "Lua bindings for the Discount Markdown library",
