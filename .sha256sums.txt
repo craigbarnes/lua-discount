@@ -1,0 +1,4 @@
+65c9146c109bc0ce505b5873f53eca71330e94b7db2e73cefd513801d7cbc91e  public/dist/lua-discount-0.1.0.tar.gz
+d74c8a84ef2e4010d28ff78f4a2c69549a398cfe04fc43795fe68ca4bfe692c7  public/dist/lua-discount-0.2.1.tar.gz
+66008b96f8093df1b720f0550751538b4a86e438425ff85abb46cd8f75b33ff0  public/dist/lua-discount-0.2.tar.gz
+8ee6f28bfc8e4ecc28257030a66788d9428a0dbc35f45a01ae695a77944085c7  public/dist/lua-discount-0.3.tar.gz

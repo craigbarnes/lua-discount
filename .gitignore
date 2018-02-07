@@ -1,4 +1,4 @@
-discount.so
-discount.o
-lua-discount-*.tar.gz
+/discount.so
+/discount.o
+/public/
 tags

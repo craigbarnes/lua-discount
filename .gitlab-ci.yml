@@ -9,3 +9,13 @@ tests:
                   DISCOUNT_LIBDIR=/usr/lib/x86_64-linux-gnu
               && lua$v test.lua ;
           done
+
+pages:
+    stage: deploy
+    image: debian:stable
+    artifacts: {paths: [public]}
+    only: [master]
+    script:
+        - git fetch --tags
+        - make -j"$(nproc)" dist
+        - make check-dist
