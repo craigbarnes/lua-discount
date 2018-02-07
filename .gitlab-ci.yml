@@ -1,19 +1,11 @@
 tests:
     stage: test
-    image: quay.io/craigbarnes/lua-testing
+    image: registry.gitlab.com/craigbarnes/dockerfiles/lua-testing
     script:
-        - make check-discount-tarball
-        - make -j`nproc` local-discount
-        - make check-all USE_LOCAL_DISCOUNT=1
-        - make clean check-luarocks-make LUAROCKS=luarocks-5.3
-        - make check-luarocks-build LUAROCKS=luarocks-5.3
-
-pages:
-    stage: deploy
-    image: quay.io/craigbarnes/pandoc
-    artifacts: {paths: [public]}
-    only: [master]
-    script:
-        - git fetch --tags
-        - make -j`nproc` dist
-        - make check-dist
+        - make check
+        - luarocks-5.3 make
+        - lua5.3 test.lua
+        - luarocks-5.2 make
+        - lua5.2 test.lua
+        - luarocks-5.1 make
+        - lua5.1 test.lua
