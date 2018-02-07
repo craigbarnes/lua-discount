@@ -109,8 +109,10 @@ static int compile(lua_State *L) {
 }
 
 int luaopen_discount(lua_State *L) {
-    lua_createtable(L, 0, 1);
+    lua_createtable(L, 0, 2);
     lua_pushcfunction(L, compile);
     lua_setfield(L, -2, "compile");
+    lua_pushstring(L, markdown_version);
+    lua_setfield(L, -2, "_libmarkdown_version");
     return 1;
 }
