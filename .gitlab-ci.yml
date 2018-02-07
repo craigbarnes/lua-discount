@@ -2,6 +2,7 @@ tests:
     stage: test
     image: registry.gitlab.com/craigbarnes/dockerfiles/lua-testing
     script:
+        - apt-get update && apt-get -y install libmarkdown2-dev
         - luarocks-5.3 make
         - lua5.3 test.lua
         - luarocks-5.2 make
