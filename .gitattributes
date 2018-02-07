@@ -1,3 +1,4 @@
+.distinfo export-subst
 .git* export-ignore
 .sha256sums.txt export-ignore
 discount-scm-1.rockspec export-ignore
