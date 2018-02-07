@@ -1,6 +1,6 @@
 /*
  Lua bindings for the Discount Markdown library.
- Copyright (c) 2012-2015 Craig Barnes
+ Copyright (c) 2012-2018 Craig Barnes
 
  Permission to use, copy, modify, and/or distribute this software for any
  purpose with or without fee is hereby granted, provided that the above
