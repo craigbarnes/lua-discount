@@ -4,6 +4,11 @@ local discount = require "discount"
 local compile = assert(discount.compile)
 
 do
+    local libver = assert(discount._libmarkdown_version)
+    assert(libver:match("^[0-9.]+$"))
+end
+
+do
     local doc = assert(compile "%Title ::\n%Author ::\n%Date ::\n*Text*\n")
     assert(doc.title == "Title ::")
     assert(doc.author == "Author ::")
