@@ -8,6 +8,10 @@ CWARNS = -Wall -Wextra -Wshadow -Wundef -Wconversion -Wc90-c99-compat
 LUA = lua
 DIST = 0.4 0.3 0.2.1 0.2 0.1.0
 
+default:
+	@echo 'The Makefile is for development only.' >&2
+	@echo 'Use "luarocks make" to install.' >&2
+
 all: discount.so
 
 discount.so: discount.o
@@ -34,5 +38,5 @@ clean:
 	rm -f discount.so discount.o
 
 
-.PHONY: all dist check check-dist clean
+.PHONY: default all dist check check-dist clean
 .DELETE_ON_ERROR:
