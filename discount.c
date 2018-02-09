@@ -20,6 +20,7 @@
 #include <lua.h>
 #include <lauxlib.h>
 #include <mkdio.h>
+#include "compat.h"
 
 static const char *const options[] = {
     "nolinks", "noimages", "nopants", "nohtml", "strict",
@@ -106,7 +107,7 @@ static int compile(lua_State *L) {
     return 1;
 }
 
-int luaopen_discount(lua_State *L) {
+EXPORT int luaopen_discount(lua_State *L) {
     lua_createtable(L, 0, 2);
     lua_pushcfunction(L, compile);
     lua_setfield(L, -2, "compile");
