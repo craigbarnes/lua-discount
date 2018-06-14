@@ -3,7 +3,7 @@ version = "scm-1"
 
 description = {
     summary = "Lua bindings for the Discount Markdown library",
-    homepage = "https://github.com/craigbarnes/lua-discount",
+    homepage = "https://gitlab.com/craigbarnes/lua-discount",
     license = "ISC"
 }
 
