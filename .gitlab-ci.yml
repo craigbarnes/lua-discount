@@ -6,9 +6,7 @@ tests:
     script:
         - apt-get update && apt-get -y install libmarkdown2-dev
         - for v in 5.3 5.2 5.1; do
-              luarocks-$v make
-                  DISCOUNT_INCDIR=/usr/include/x86_64-linux-gnu
-                  DISCOUNT_LIBDIR=/usr/lib/x86_64-linux-gnu
+              luarocks --lua-version=$v --tree=/usr make
               && lua$v test.lua ;
           done
 
