@@ -68,13 +68,13 @@ static int compile(lua_State *L) {
     }
 
     doc = mkd_string(input, (int) input_size, flags);
-    if (doc == NULL) {
+    if (unlikely(doc == NULL)) {
         lua_pushnil(L);
         lua_pushstring(L, "mkd_string() returned NULL");
         return 2;
     }
 
-    if (mkd_compile(doc, flags) != 1) {
+    if (unlikely(mkd_compile(doc, flags) != 1)) {
         mkd_cleanup(doc);
         lua_pushnil(L);
         lua_pushstring(L, "mkd_compile() failed");
@@ -82,14 +82,14 @@ static int compile(lua_State *L) {
     }
 
     body_size = mkd_document(doc, &body);
-    if (body == NULL || body_size < 0) {
+    if (unlikely(body == NULL || body_size < 0)) {
         mkd_cleanup(doc);
         lua_pushnil(L);
         lua_pushstring(L, "mkd_document() failed");
         return 2;
     }
 
-    lua_createtable(L, 0, 4);
+    lua_createtable(L, 0, 6);
     add_lfield(L, "body", body, (size_t) body_size);
     add_field(L, "title", mkd_doc_title(doc));
     add_field(L, "author", mkd_doc_author(doc));
