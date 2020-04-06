@@ -7,6 +7,8 @@ tests:
         - apt-get update && apt-get -y install libmarkdown2-dev
         - for v in 5.3 5.2 5.1; do
               luarocks --lua-version=$v --tree=/usr make
+                  DISCOUNT_INCDIR="$(pkg-config --variable=includedir libmarkdown)"
+                  DISCOUNT_LIBDIR="$(pkg-config --variable=libdir libmarkdown)"
               && lua$v test.lua ;
           done
 
