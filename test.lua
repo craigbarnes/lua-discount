@@ -5,7 +5,7 @@ local compile = assert(discount.compile)
 
 do
     local libver = assert(discount._libmarkdown_version)
-    assert(libver:match("^[0-9.]+$"))
+    assert(libver:match("^[0-9]"))
 end
 
 do
