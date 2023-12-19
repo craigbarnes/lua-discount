@@ -1,4 +1,4 @@
-stages: [test, dist]
+stages: [test]
 
 tests:
     stage: test
@@ -11,14 +11,3 @@ tests:
                   DISCOUNT_LIBDIR=/usr/lib/x86_64-linux-gnu
               && lua$v test.lua ;
           done
-
-pages:
-    stage: dist
-    image: debian:stable
-    artifacts: {paths: [public]}
-    only: [master]
-    script:
-        - apt-get update && apt-get -y install make git
-        - git fetch --tags
-        - make -j"$(nproc)" dist
-        - make check-dist
