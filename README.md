@@ -20,11 +20,11 @@ maintain it.
 License
 -------
 
-BSD Zero Clause [License] ([`0BSD`]).
+ISC [License][] (SPDX: [`ISC`]).
 
 
 [Lua]: https://www.lua.org/
 [Discount]: http://www.pell.portland.or.us/~orc/Code/discount/
 [Markdown]: https://en.wikipedia.org/wiki/Markdown
 [License]: LICENSE
-[`0BSD`]: https://spdx.org/licenses/0BSD.html
+[`ISC`]: https://spdx.org/licenses/ISC.html
